@@ -4,6 +4,8 @@ on:
       branches:
          - main
          - dev
+         - container-service
+         - container-as-runner
 env:
    CACHE_KEY: node-deps
    MONGODB_DB_NAME: gha-demo
@@ -11,11 +13,23 @@ jobs:
    test:
       environment: testing
       runs-on: ubuntu-latest
+      # container:
+      #    image: node:18
+      services:
+         mongodb:
+            image: mongo:latest
+            env:
+               MONGO_INITDB_ROOT_USERNAME: test_user
+               MONGO_INITDB_ROOT_PASSWORD: test_password
+            ports:
+               # Opens tcp port 27017 on the host and service container
+               - 27017:27017
+
       env:
-         MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-         MONGODB_CLUSTER_ADDRESS: cluster0.x6ka5av.mongodb.net
-         MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-         MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+         MONGODB_CONNECTION_PROTOCOL: mongodb
+         MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
+         MONGODB_USERNAME: test_user
+         MONGODB_PASSWORD: test_password
          PORT: 8080
       steps:
          - name: Get Code
