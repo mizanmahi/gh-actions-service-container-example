@@ -5,6 +5,7 @@ on:
          - main
          - dev
          - container-service
+         - container-as-runner
 env:
    CACHE_KEY: node-deps
    MONGODB_DB_NAME: gha-demo
