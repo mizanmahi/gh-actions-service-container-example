@@ -1,3 +1,5 @@
+import { config as dotenvConfig } from 'dotenv';
+dotenvConfig(); 
 /**
  * @see https://playwright.dev/docs/test-configuration
  * @type {import('@playwright/test').PlaywrightTestConfig}
